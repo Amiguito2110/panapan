@@ -4,18 +4,33 @@ import 'package:recetita/models/bread_model.dart';
 import 'package:recetita/providers/bread_providers.dart';
 import 'package:recetita/screens/bread_details.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  bool _isInitialized = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Espera un frame para evitar conflicto con el build
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final breadProvider = Provider.of<BreadProvider>(context, listen: false);
+
+      if (breadProvider.breads.isEmpty) {
+        breadProvider.fetchBreads();
+        print("Panes cargados desde initState");
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final breadProvider = Provider.of<BreadProvider>(context, listen: false);
-
-    if (breadProvider.breads.isEmpty) {
-      breadProvider.fetchBreads();
-      print("Panes cargados desde el provider: ${breadProvider.breads.length}");
-    }
-
     final colors = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(
