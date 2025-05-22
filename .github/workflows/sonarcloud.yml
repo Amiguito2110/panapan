@@ -31,9 +31,10 @@ jobs:
         uses: SonarSource/sonarcloud-github-action@master
         with:
           args: >
-            -Dsonar.projectKey=panapan
-            -Dsonar.organization=wilmer-hernandez-herrera
+            -Dsonar.projectKey=amiguito2110_panapan
+            -Dsonar.organization=amiguito2110
             -Dsonar.host.url=https://sonarcloud.io
             -Dsonar.login=${{ secrets.SONAR_TOKEN }}
             -Dsonar.sources=lib
             -Dsonar.dart.dcm.reportPaths=report.json
+
